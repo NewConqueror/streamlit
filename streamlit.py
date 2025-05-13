@@ -52,29 +52,31 @@ def user_input_features():
 
 input_df = user_input_features()
 
-# Tahmin yap
-scaled_input = scaler.transform(input_df)
-prediction = model.predict(scaled_input)
-prediction_proba = model.predict_proba(scaled_input)
+# Tahmin yap butonu
+if st.button("Show Prediction Results"):
+    # Tahmin yap
+    scaled_input = scaler.transform(input_df)
+    prediction = model.predict(scaled_input)
+    prediction_proba = model.predict_proba(scaled_input)
 
-# Tahmin sonuçlarını göster
-st.subheader("Prediction")
-st.write("Positive (Diabetes)" if prediction[0] == 1 else "Negative (No Diabetes)")
+    # Tahmin sonuçlarını göster
+    st.subheader("Prediction")
+    st.write("Positive (Diabetes)" if prediction[0] == 1 else "Negative (No Diabetes)")
 
-st.subheader("Prediction Probability")
-st.write(f"Probability of No Diabetes: {prediction_proba[0][0]:.2f}")
-st.write(f"Probability of Diabetes: {prediction_proba[0][1]:.2f}")
+    st.subheader("Prediction Probability")
+    st.write(f"Probability of No Diabetes: {prediction_proba[0][0]:.2f}")
+    st.write(f"Probability of Diabetes: {prediction_proba[0][1]:.2f}")
 
-# Eğitim seti sonuçlarını görselleştir
-st.subheader("Model Evaluation on Test Set")
-y_pred = model.predict(X_test_scaled)
-st.write("Accuracy:", accuracy_score(y_test, y_pred))
+    # Eğitim seti sonuçlarını görselleştir
+    st.subheader("Model Evaluation on Test Set")
+    y_pred = model.predict(X_test_scaled)
+    st.write("Accuracy:", accuracy_score(y_test, y_pred))
 
-# Confusion Matrix
-st.subheader("Confusion Matrix")
-cm = confusion_matrix(y_test, y_pred)
-fig, ax = plt.subplots()
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=["No Diabetes", "Diabetes"], yticklabels=["No Diabetes", "Diabetes"])
-plt.xlabel("Predicted")
-plt.ylabel("True")
-st.pyplot(fig)
+    # Confusion Matrix
+    st.subheader("Confusion Matrix")
+    cm = confusion_matrix(y_test, y_pred)
+    fig, ax = plt.subplots()
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=["No Diabetes", "Diabetes"], yticklabels=["No Diabetes", "Diabetes"])
+    plt.xlabel("Predicted")
+    plt.ylabel("True")
+    st.pyplot(fig)
