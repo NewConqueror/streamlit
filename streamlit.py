@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 st.title("Diabetes Prediction with Naive Bayes (Selected Features)")
 
 # Veri yükleme
-@st.cache
+@st.cache_data
 def load_data():
     df = pd.read_csv("diabetes_pima_indians.csv")
     cols_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
